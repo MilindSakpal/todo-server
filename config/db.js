@@ -7,6 +7,7 @@ const db = mysql.createPool(process.env.DB_URL);
   try {
     const connection = await db.getConnection();
     console.log("✅ MySQL Connected");
+    console.log(process.env.DB_URL);
     connection.release();
   } catch (err) {
     console.error("❌ Database connection failed:");
