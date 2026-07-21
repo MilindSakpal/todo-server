@@ -10,6 +10,7 @@ const db = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 
+
   ssl: {
     ca: fs.readFileSync(path.join(__dirname, "../certs/ca.pem")),
   },
@@ -24,6 +25,8 @@ const db = mysql.createPool({
     const conn = await db.getConnection();
     console.log("✅ Connected to Aiven MySQL");
     conn.release();
+    console.log("DB_HOST:", process.env.DB_HOST);
+console.log("DB_PORT:", process.env.DB_PORT);
   } catch (err) {
     console.error("❌ Database connection failed");
     console.error(err);

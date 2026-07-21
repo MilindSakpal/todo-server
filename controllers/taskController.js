@@ -89,7 +89,6 @@ console.log("created_by:", created_by);
 
 const updateTask = async (req, res) => {
   try {
-
     const { id } = req.params;
 
     const {
@@ -101,8 +100,10 @@ const updateTask = async (req, res) => {
       start_time,
       end_time,
       status,
-      assigned_to,
     } = req.body;
+
+    // Always use the logged-in employee
+    const assigned_to = req.user.id;
 
     const duration = calculateDuration(start_time, end_time);
 
@@ -111,6 +112,18 @@ const updateTask = async (req, res) => {
         message: "End time must be after start time.",
       });
     }
+    console.log({
+  task_name,
+  project,
+  category,
+  description,
+  task_date,
+  start_time,
+  end_time,
+  duration,
+  status,
+  assigned_to,
+});
 
     await taskModel.updateTask(id, {
       task_name,
