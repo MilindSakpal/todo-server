@@ -11,9 +11,9 @@ const app = express();
 
 const graphRoutes = require("./routes/graphRoutes");
 
-app.use("/graph", graphRoutes);
 app.use(cors());
 app.use(express.json());
+app.use("/graph", graphRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Office Task Management API 🚀");
