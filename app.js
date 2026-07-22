@@ -9,6 +9,9 @@ const taskRoutes = require("./routes/taskRoutes");
 
 const app = express();
 
+const graphRoutes = require("./routes/graphRoutes");
+
+app.use("/graph", graphRoutes);
 app.use(cors());
 app.use(express.json());
 
