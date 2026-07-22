@@ -3,26 +3,21 @@ const router = express.Router();
 
 const { getGraphClient } = require("../services/graphService");
 
-router.get("/user", async (req, res) => {
+router.get("/drive", async (req, res) => {
   try {
     const client = await getGraphClient();
 
-    const user = await client
-      .api("/users/info@intellysisdigital.com")
+    const drive = await client
+      .api("/users/4e2610c5-da92-480b-80a8-8b05ff2724e5/drive")
       .get();
 
-    res.json(user);
+    res.json(drive);
 
   } catch (err) {
-    console.error("STATUS:", err.statusCode);
-    console.error("CODE:", err.code);
-    console.error("MESSAGE:", err.message);
-    console.error("BODY:", err.body);
+    console.error(err);
 
     res.status(500).json({
       success: false,
-      status: err.statusCode,
-      code: err.code,
       message: err.message,
       body: err.body,
     });
