@@ -3,17 +3,28 @@ const router = express.Router();
 
 const { getGraphClient } = require("../services/graphService");
 
-router.get("/tables", async (req, res) => {
+router.post("/add-row", async (req, res) => {
   try {
     const client = await getGraphClient();
 
-    const tables = await client
+    const response = await client
       .api(
-        "/users/4e2610c5-da92-480b-80a8-8b05ff2724e5/drive/items/01RFGZXZ3DXGXPOPIDDRHZTJA4BFHA2YFH/workbook/tables"
+        "/users/4e2610c5-da92-480b-80a8-8b05ff2724e5/drive/items/01RFGZXZ3DXGXPOPIDDRHZTJA4BFHA2YFH/workbook/tables/TaskTable/rows/add"
       )
-      .get();
+      .post({
+        values: [[
+          "22-Jul-2026",                 // Date
+          "Intellysis Portal",           // Project
+          "Development",                // Category
+          "Testing Graph API",          // Task
+          "09:00",                      // Start
+          "10:30",                      // End
+          "01:30",                      // Duration
+          "Completed"                   // Status
+        ]]
+      });
 
-    res.json(tables);
+    res.json(response);
 
   } catch (err) {
     console.error(err);
