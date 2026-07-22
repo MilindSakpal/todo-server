@@ -22,4 +22,10 @@ app.get("/", (req, res) => {
 app.use("/auth", authRoutes);
 app.use("/tasks", taskRoutes);
 
+app.get("/test123", (req, res) => {
+  res.json({
+    message: "Backend updated successfully"
+  });
+});
+
 module.exports = app;
