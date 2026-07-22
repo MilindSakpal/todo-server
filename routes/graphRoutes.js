@@ -50,20 +50,26 @@ router.post("/add-row", async (req, res) => {
   .api(
     "/users/4e2610c5-da92-480b-80a8-8b05ff2724e5/drive/items/01RFGZXZ3DXGXPOPIDDRHZTJA4BFHA2YFH/workbook/tables/TaskTable/rows/add"
   )
+const response = await client
+  .api(
+    "/users/4e2610c5-da92-480b-80a8-8b05ff2724e5/drive/items/01RFGZXZ3DXGXPOPIDDRHZTJA4BFHA2YFH/workbook/tables/TaskTable/rows/add"
+  )
   .post({
     values: [[
-      "",
-      "2026-07-22",
-      "Internal",
-      "Testing Graph API",
-      "Medium",
-      "High",
-      2,
-      2,
-      "Done",
-      "Office",
-      "",
-      "Successfully added from Graph API"
+      31,                             // No.
+      "22-Jul-2026",                  // Date
+      "Internal",                     // Project
+      "Testing Graph API",            // Task / Work Description
+      "Medium",                       // Task Type
+      "High",                         // Priority
+      2,                              // Planned Hours
+      2,                              // Actual Hours
+      "Done",                         // Status
+      "Office",                       // Work Mode
+      "",                             // Blocker / Dependency
+      "Successfully added using Graph API", // End-of-Day Update
+      "",                             // Output / Link
+      "100%"                          // Completion %
     ]]
   });
 
