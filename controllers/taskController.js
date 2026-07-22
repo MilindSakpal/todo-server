@@ -71,6 +71,14 @@ const createTask = async (req, res) => {
 
     const excelHours = durationToHours(duration);
 
+    const excelDate = new Date(task_date)
+      .toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      })
+      .replace(/ /g, "-");
+
     console.log("JWT User:", req.user);
     console.log("assigned_to:", assigned_to);
     console.log("created_by:", created_by);
@@ -92,13 +100,13 @@ const createTask = async (req, res) => {
     try {
       await appendTaskToExcel({
         no: "",
-        date: task_date,
+        date: excelDate,
         project,
         description: description ? `${task_name} - ${description}` : task_name,
         taskType: category,
         priority: "Medium", // or priority || "Medium" if frontend sends it
-        plannedHours: excelHours,
-        actualHours: excelHours,
+        plannedHours: Number(excelHours),
+        actualHours: Number(excelHours),
         status,
         workMode: "Office",
         blocker: "",
