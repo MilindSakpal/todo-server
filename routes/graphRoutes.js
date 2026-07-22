@@ -1,76 +1,60 @@
 const express = require("express");
 const router = express.Router();
-
 const { getGraphClient } = require("../services/graphService");
 
-// Get all columns
-router.get("/column-names", async (req, res) => {
-  try {
-    const client = await getGraphClient();
+const USER_ID = "4e2610c5-da92-480b-80a8-8b05ff2724e5";
+const FILE_ID = "01RFGZXZ3DXGXPOPIDDRHZTJA4BFHA2YFH";
+const TABLE_NAME = "TaskTable";
 
-    const columns = await client
-      .api("/users/4e2610c5-da92-480b-80a8-8b05ff2724e5/drive/items/01RFGZXZ3DXGXPOPIDDRHZTJA4BFHA2YFH/workbook/tables/TaskTable/columns")
-      .get();
-
-    res.json(columns.value.map(c => c.name));
-
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-router.get("/rows", async (req, res) => {
-  try {
-    const client = await getGraphClient();
-
-    const rows = await client
-      .api(
-        "/users/4e2610c5-da92-480b-80a8-8b05ff2724e5/drive/items/01RFGZXZ3DXGXPOPIDDRHZTJA4BFHA2YFH/workbook/tables/TaskTable/rows"
-      )
-      .get();
-
-    res.json(rows);
-  } catch (err) {
-    res.status(500).json({
-      message: err.message,
-      body: err.body,
-    });
-  }
-});
-
-// Add a row
 router.post("/add-row", async (req, res) => {
   try {
+    const {
+      no,
+      date,
+      project,
+      description,
+      taskType,
+      priority,
+      plannedHours,
+      actualHours,
+      status,
+      workMode,
+      blocker,
+      endOfDay,
+      outputLink,
+      completion
+    } = req.body;
+
     const client = await getGraphClient();
 
     const response = await client
-  .api(
-    "/users/4e2610c5-da92-480b-80a8-8b05ff2724e5/drive/items/01RFGZXZ3DXGXPOPIDDRHZTJA4BFHA2YFH/workbook/tables/TaskTable/rows/add"
-  )
-const response = await client
-  .api(
-    "/users/4e2610c5-da92-480b-80a8-8b05ff2724e5/drive/items/01RFGZXZ3DXGXPOPIDDRHZTJA4BFHA2YFH/workbook/tables/TaskTable/rows/add"
-  )
-  .post({
-    values: [[
-      31,                             // No.
-      "22-Jul-2026",                  // Date
-      "Internal",                     // Project
-      "Testing Graph API",            // Task / Work Description
-      "Medium",                       // Task Type
-      "High",                         // Priority
-      2,                              // Planned Hours
-      2,                              // Actual Hours
-      "Done",                         // Status
-      "Office",                       // Work Mode
-      "",                             // Blocker / Dependency
-      "Successfully added using Graph API", // End-of-Day Update
-      "",                             // Output / Link
-      "100%"                          // Completion %
-    ]]
-  });
+      .api(
+        `/users/${USER_ID}/drive/items/${FILE_ID}/workbook/tables/${TABLE_NAME}/rows/add`
+      )
+      .post({
+        values: [[
+          no ?? "",
+          date ?? "",
+          project ?? "",
+          description ?? "",
+          taskType ?? "",
+          priority ?? "",
+          plannedHours ?? "",
+          actualHours ?? "",
+          status ?? "",
+          workMode ?? "",
+          blocker ?? "",
+          endOfDay ?? "",
+          outputLink ?? "",
+          completion ?? ""
+        ]]
+      });
 
-    res.json(response);
+    res.json({
+      success: true,
+      data: response,
+    });
+
   } catch (err) {
     console.error(err);
 
