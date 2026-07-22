@@ -16,7 +16,6 @@ async function getGraphClient() {
   const response = await cca.acquireTokenByClientCredential({
     scopes: ["https://graph.microsoft.com/.default"],
   });
-
   return Client.init({
     authProvider: (done) => {
       done(null, response.accessToken);
