@@ -10,10 +10,10 @@ const taskRoutes = require("./routes/taskRoutes");
 const app = express();
 
 const graphRoutes = require("./routes/graphRoutes");
+const exportRoutes = require("./routes/exportRoutes");
 
 app.use(cors());
 app.use(express.json());
-app.use("/graph", graphRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Office Task Management API 🚀");
@@ -21,6 +21,8 @@ app.get("/", (req, res) => {
 
 app.use("/auth", authRoutes);
 app.use("/tasks", taskRoutes);
+app.use("/graph", graphRoutes);
+app.use("/export", exportRoutes);
 
 app.get("/test123", (req, res) => {
   res.json({
