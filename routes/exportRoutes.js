@@ -9,21 +9,15 @@ router.get("/excel", async (req, res) => {
   try {
     const client = await getGraphClient();
 
-    const stream = await client
-      .api(`/users/${USER_ID}/drive/items/${FILE_ID}/content`)
-      .getStream();
+    // Get download URL from Graph
+    const file = await client
+      .api(`/users/${USER_ID}/drive/items/${FILE_ID}`)
+      .get();
 
-    res.setHeader(
-      "Content-Disposition",
-      "attachment; filename=Timesheet.xlsx"
-    );
-
-    res.setHeader(
-      "Content-Type",
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    );
-
-    stream.pipe(res);
+    res.json({
+      success: true,
+      downloadUrl: file["@microsoft.graph.downloadUrl"],
+    });
 
   } catch (err) {
     console.error(err);
