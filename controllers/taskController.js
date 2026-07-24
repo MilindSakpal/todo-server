@@ -98,13 +98,13 @@ const createTask = async (req, res) => {
     });
 
     try {
-      await appendTaskToExcel({
+      await appendTaskToExcel(assigned_to, {
         no: "",
         date: excelDate,
         project,
         description: description ? `${task_name} - ${description}` : task_name,
         taskType: category,
-        priority: "Medium", // or priority || "Medium" if frontend sends it
+        priority: "Medium",
         plannedHours: Number(excelHours),
         actualHours: Number(excelHours),
         status,

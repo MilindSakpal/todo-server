@@ -3,18 +3,22 @@ const { getGraphClient } = require("./graphService");
 const USER_ID = "4e2610c5-da92-480b-80a8-8b05ff2724e5";
 
 const EMPLOYEE_FILES = {
-  9: "FILE_ID_OF_KASHYAP",
-  10: "FILE_ID_OF_PARTH",
-  11: "FILE_ID_OF_DHAIRYA",
-  12: "FILE_ID_OF_MILIND",
+  9: "01RFGZXZ3AQ5K4KQTQZBH2N2EZ7ADGCTYW", // Kashyap
+  10: "01RFGZXZ454PZ5EKZJ6NHJCCZWDUKBFONK", // Parth
+  11: "01RFGZXZ2BPFZWNKOKA5DIHB5QAP2USGKP", // Dhairya
+  12: "01RFGZXZ3DXGXPOPIDDRHZTJA4BFHA2YFH", // Milind
 };
 const TABLE_NAME = "TaskTable";
 
-async function appendTaskToExcel(task) {
+async function appendTaskToExcel(employeeId, task) {
   try {
     console.log("========== EXCEL SYNC START ==========");
     console.log("Task Data:", task);
+    const FILE_ID = EMPLOYEE_FILES[employeeId];
 
+if (!FILE_ID) {
+  throw new Error(`No Excel file mapped for employee ${employeeId}`);
+}
     const client = await getGraphClient();
 
     const response = await client
