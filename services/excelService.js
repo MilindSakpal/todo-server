@@ -1,7 +1,13 @@
 const { getGraphClient } = require("./graphService");
 
 const USER_ID = "4e2610c5-da92-480b-80a8-8b05ff2724e5";
-const FILE_ID = "01RFGZXZ3DXGXPOPIDDRHZTJA4BFHA2YFH";
+
+const EMPLOYEE_FILES = {
+  9: "FILE_ID_OF_KASHYAP",
+  10: "FILE_ID_OF_PARTH",
+  11: "FILE_ID_OF_DHAIRYA",
+  12: "FILE_ID_OF_MILIND",
+};
 const TABLE_NAME = "TaskTable";
 
 async function appendTaskToExcel(task) {

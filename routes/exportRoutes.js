@@ -5,14 +5,32 @@ const { getGraphClient } = require("../services/graphService");
 const USER_ID = "4e2610c5-da92-480b-80a8-8b05ff2724e5";
 const FILE_ID = "01RFGZXZ3DXGXPOPIDDRHZTJA4BFHA2YFH";
 
+router.get("/list-files", async (req, res) => {
+  try {
+    const client = await getGraphClient();
+
+    const files = await client
+      .api(`/users/${USER_ID}/drive/root/children`)
+      .get();
+
+    res.json(files.value);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
+
 router.get("/excel", async (req, res) => {
   try {
     const client = await getGraphClient();
 
-    // Get download URL from Graph
+    console.log("✅ Graph Client Created");
+
     const file = await client
       .api(`/users/${USER_ID}/drive/items/${FILE_ID}`)
       .get();
+
+    console.log(file);
 
     res.json({
       success: true,
@@ -20,11 +38,14 @@ router.get("/excel", async (req, res) => {
     });
 
   } catch (err) {
+    console.error("❌ EXPORT ERROR");
     console.error(err);
 
     res.status(500).json({
       success: false,
       message: err.message,
+      body: err.body,
+      stack: err.stack,
     });
   }
 });
