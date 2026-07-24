@@ -27,7 +27,17 @@ async function appendTaskToExcel(employeeId, task) {
       )
       .get();
 
-    const nextNo = rows.value.length + 1;
+    let maxNo = 0;
+
+    rows.value.forEach((row) => {
+      const no = Number(row.values[0][0]);
+
+      if (!isNaN(no) && no > maxNo) {
+        maxNo = no;
+      }
+    });
+
+    const nextNo = maxNo + 1;
 
     console.log("Next Serial Number:", nextNo);
 
