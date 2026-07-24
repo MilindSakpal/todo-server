@@ -110,7 +110,7 @@ const createTask = async (req, res) => {
         status,
         workMode: "Office",
         blocker: "",
-        endOfDay: description,
+        endOfDay: "",
         outputLink: "",
         completion: status === "Done" ? 1 : 0,
       });
