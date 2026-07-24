@@ -41,6 +41,32 @@ async function appendTaskToExcel(employeeId, task) {
 
     console.log("Next Serial Number:", nextNo);
 
+    let lastDate = "";
+
+    for (let i = rows.value.length - 1; i >= 0; i--) {
+      const date = rows.value[i].values?.[0]?.[1];
+
+      if (date && String(date).trim() !== "") {
+        lastDate = date;
+        break;
+      }
+    }
+
+    console.log("Last Date:", lastDate);
+    console.log("Current Date:", task.date);
+
+    if (lastDate && lastDate !== task.date) {
+      console.log("New day detected. Adding separator row...");
+
+      await client
+        .api(
+          `/users/${USER_ID}/drive/items/${FILE_ID}/workbook/tables/${TABLE_NAME}/rows/add`,
+        )
+        .post({
+          values: [["", "", "", "", "", "", "", "", "", "", "", "", "", ""]],
+        });
+    }
+
     const response = await client
       .api(
         `/users/${USER_ID}/drive/items/${FILE_ID}/workbook/tables/${TABLE_NAME}/rows/add`,
